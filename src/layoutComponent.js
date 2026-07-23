@@ -5,6 +5,7 @@ import {create} from "fast-creator";
 import {ContextMenuComponent} from "./contextMenuComponent.js";
 import {LocalFilesystem} from "./filesystem/localFilesystem.js";
 import {InMemoryFilesystem} from "./filesystem/InMemoryFilesystem.js";
+import {ProjectFileFilesystem} from "./filesystem/ProjectFileFilesystem.js";
 
 export class LayoutComponent extends HTMLElement {
     constructor() {
@@ -39,8 +40,7 @@ export class LayoutComponent extends HTMLElement {
                         treeComponent = new FileTreeComponent();
                         this.add(treeComponent)
                     }
-                    const fs = new InMemoryFilesystem();
-                    await fs.loadProjectFile(await handle.getFile())
+                    const fs = new ProjectFileFilesystem(handle);
                     treeComponent.load(fs)
 
                 }
@@ -57,8 +57,7 @@ export class LayoutComponent extends HTMLElement {
                             treeComponent = new FileTreeComponent();
                             this.add(treeComponent)
                         }
-                        const fs = new InMemoryFilesystem();
-                        await fs.loadProjectFile(await file.getFile())
+                        const fs = new ProjectFileFilesystem(file);
                         treeComponent.load(fs)
 
                     }
@@ -109,8 +108,7 @@ export class LayoutComponent extends HTMLElement {
                             treeComponent = new FileTreeComponent();
                             this.add(treeComponent)
                         }
-                        const fs = new InMemoryFilesystem();
-                        await fs.loadProjectFile(await fileHandle.getFile())
+                        const fs = new ProjectFileFilesystem(fileHandle);
                         treeComponent.load(fs)
                     }
                 })
