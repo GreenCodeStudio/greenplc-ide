@@ -1,10 +1,10 @@
 {
-  "name": "Green PLC IDE",
+  "name": "Green PLC IDE1",
   "short_name": "GreenPLC",
   "description": "PLC and microcontroller IDE",
   "start_url": ".",
   "scope": ".",
-  "display_override": ["fullscreen", "minimal-ui"],
+  "display_override": ["window-controls-overlay"],
   "display": "standalone",
   "orientation": "any",
   "background_color": "#333",
