@@ -1,0 +1,201 @@
+html {
+    --background: #080808;
+    --background2: #181818;
+    --main1: #a0a0a0;
+    background: var(--background);
+    color: #fff;
+    font-family: roboto, sans-serif;
+}
+
+layout-component {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 0.5em;
+    padding: 0.5em;
+    height: calc(100vh - 2em);
+
+    > aside, > main {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+
+        > * {
+            flex: 1 1 1px;
+            height: 1px;
+        }
+    }
+}
+
+subwindow-component {
+    background: var(--background2);
+    border: var(--main1) 1px solid;
+    padding: 0.25em;
+    display: grid;
+    grid-template-rows: max-content 1fr;
+
+    > header {
+        background: var(--main1);
+        color: var(--background);
+        padding: 0.25em;
+        margin: -0.25em -0.25em 0.25em -0.25em;
+    }
+
+    > * {
+        overflow: auto;
+    }
+}
+
+file-editor-component {
+    display: flex;
+
+    > textarea, .codeEditor {
+        flex: 1 1 50%;
+        font-family: monospace;
+        white-space: pre;
+    }
+
+    .info {
+        flex: 1 1 50%;
+        code, serialized-code-visualization-component {
+            font-family: monospace;
+            padding: 0.25em;
+            display: block;
+            white-space: pre;
+
+            .hover {
+                background: rgba(255, 0, 0, 0.2);
+            }
+
+            .hover-referenced {
+                background: rgba(0, 255, 0, 0.2);
+            }
+
+            .hover-referenced-reverse {
+                background: rgba(0, 0, 255, 0.2);
+            }
+        }
+    }
+}
+
+module-graphical-component {
+    border: 2px solid red;
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+    position: relative;
+
+    header {
+        grid-column: 1/4;
+        padding: 1em;
+        background: red;
+        color: #000;
+    }
+
+    .inputs {
+        grid-column: 1;
+        grid-row: 2;
+        border: 2px solid green;
+        padding: 1em;
+    }
+
+    .outputs {
+        grid-column: 3;
+        grid-row: 2;
+        border: 2px solid blue;
+        padding: 1em;
+    }
+    .body{
+        display: flex;
+        gap: 1em;
+    }
+    .block{
+        color:#000;
+        z-index: 2;
+        position: relative;
+        margin: 0.25em;
+        background:#ccc;
+        &.input{
+            background: green;
+        }
+        &.output{
+            background: #77f;
+        }
+        &.literal{
+            background: violet;
+        }
+        &.submodule{
+            background: orange;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap:1em;
+            .title{
+                grid-column: 1/3;
+
+            }
+            .blockInput{
+                display: flex;
+                text-align: left;
+                &::before{
+                    content: "➡️"
+                }
+            }
+            .blockOutput{
+                display: flex;
+                text-align: right;
+                &::after{
+                    content: "➡️"
+                }
+            }
+        }
+    }
+
+    svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+
+    line {
+        stroke: white;
+        stroke-width: 2px;
+    }
+}
+
+file-tree-component {
+    .directory {
+        &::before {
+            content: "📁";
+            margin-right: 0.5em;
+        }
+    }
+
+    .gplcFile {
+        &::before {
+            content: "🧩";
+            margin-right: 0.5em;
+        }
+    }
+
+    .file {
+        &::before {
+            content: "📄";
+            margin-right: 0.5em;
+        }
+    }
+
+    .subTree {
+        margin-left: 1em;
+    }
+}
+context-menu-component{
+    position: fixed;
+    border:1px solid var(--main1);
+    backdrop-filter: blur(1em);
+    left: var(--x);
+    top: var(--y);
+    z-index: 1000;
+}

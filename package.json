@@ -1,0 +1,21 @@
+{
+    "scripts": {
+        "build": "webpack --mode production",
+        "start": "webpack serve --mode development"
+    },
+    "dependencies": {
+        "fast-creator": "^1.6.0",
+        "greenplc-core": "^0.0.22"
+    },
+    "devDependencies": {
+        "html-webpack-plugin": "^5.6.7",
+        "webpack": "^5.108.4",
+        "webpack-cli": "^7.2.1",
+        "webpack-dev-server": "^6.0.0",
+        "style-loader": "^4.0.0",
+        "css-loader": "^7.1.4",
+        "sass-loader": "^17.0.0",
+        "sass": "^1.101.0"
+    },
+    "type": "module"
+}
