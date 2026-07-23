@@ -1,0 +1,44 @@
+{
+  "name": "Green PLC IDE",
+  "short_name": "GreenPLC",
+  "description": "PLC and microcontroller IDE",
+  "start_url": ".",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#333",
+  "theme_color": "#2b7a0b",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "application/greenplc-project": [".gplcproject"]
+      }
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "icons/desktop-screenshot.png",
+      "sizes": "1921x900",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Desktop view"
+    },
+    {
+      "src": "icons/mobile-screenshot.png",
+      "sizes": "320x480",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile view"
+    }
+  ],
+  "categories": ["development", "education"],
+  "prefer_related_applications": false
+}
