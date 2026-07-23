@@ -22,7 +22,7 @@ export default {
 
     plugins: [
         new HtmlWebpackPlugin({
-            templateContent: ({htmlWebpackPlugin}) => `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="manifest" href="/manifest.json"><link rel="icon" href="/icons/icon.svg" type="image/svg+xml"><meta name="theme-color" content="#2b7a0b"></head><body><div id="root"></div></body></html>`
+            templateContent: ({htmlWebpackPlugin}) => `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="manifest" href="manifest.json"><link rel="icon" href="icons/icon.svg" type="image/svg+xml"><meta name="theme-color" content="#2b7a0b"></head><body><div id="root"></div></body></html>`
         }),
         new CopyWebpackPlugin({
             patterns: [
