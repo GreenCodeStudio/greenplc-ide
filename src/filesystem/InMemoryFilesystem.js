@@ -1,8 +1,10 @@
 import JSZip from "jszip";
+import {AbstractFilesystem} from "./AbstractFilesystem.js";
 
-export class InMemoryFilesystem {
+export class InMemoryFilesystem extends AbstractFilesystem {
     constructor() {
-        this.directory = {files:[]};
+        super();
+        this.directory = {files: []};
     }
 
     async* list(path) {
@@ -40,7 +42,7 @@ export class InMemoryFilesystem {
             directory.files.push(file);
         }
         file.content = content
-
+        this.markChanged();
     }
 
     async writeFile(path, sourceFile) {
@@ -54,6 +56,7 @@ export class InMemoryFilesystem {
             file = {name: path.split('/').pop(), kind: 'file', content: ''};
             directory.files.push(file);
         }
+        this.markChanged();
     }
 
     async createDirectory(path) {
@@ -63,6 +66,7 @@ export class InMemoryFilesystem {
             dir = {name: path.split('/').pop(), kind: 'directory', files: []};
             parentDir.files.push(dir);
         }
+        this.markChanged();
     }
 
     async generateSingleProjectFile() {
@@ -84,10 +88,12 @@ export class InMemoryFilesystem {
 
     async loadProjectFile(file) {
         console.log('Loading project file', file);
-        const zip=await  JSZip.loadAsync(file);
+        const zip = await JSZip.loadAsync(file);
         console.log('zip loaded', zip);
         for (const x of Object.values(zip.files)) {
             await this.writeFileText(x.name, await x.async('text'))
         }
     }
+
+
 }

@@ -17,6 +17,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: set version
+        run: echo "export const __version = '${{ github.sha }}';export const __compileTime = 'date';" > version.js
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:

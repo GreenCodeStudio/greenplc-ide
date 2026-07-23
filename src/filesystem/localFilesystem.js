@@ -1,8 +1,16 @@
 import JSZip from "jszip";
+import {AbstractFilesystem} from "./AbstractFilesystem.js";
 
-export class LocalFilesystem {
+export class LocalFilesystem extends AbstractFilesystem {
     constructor(directory) {
+        super();
         this.directory = directory;
+        try {
+            this.observer = new FileSystemObserver(() => this.markChanged());
+            this.observer.observe(this.directory);
+        } catch (e) {
+            console.warn('FileSystemObserver not working in this browser', e);
+        }
     }
 
     async* list(path) {
@@ -43,6 +51,7 @@ export class LocalFilesystem {
         const writable = await file.createWritable();
         await writable.write(content);
         await writable.close();
+        this.markChanged();
     }
 
     async writeFile(path, sourceFile) {
@@ -51,18 +60,21 @@ export class LocalFilesystem {
         const writable = await file.createWritable();
         await writable.write(sourceFile);
         await writable.close();
+        this.markChanged();
     }
 
     async createEmptyFile(path) {
         const dirPath = path.split('/').slice(0, -1).join('/');
         const dir = await this.getDirectoryHandle(dirPath);
         dir.getFileHandle(path.split('/').pop(), {create: true});
+        this.markChanged();
     }
 
     async createDirectory(path) {
         const dirPath = path.split('/').slice(0, -1).join('/');
         const dir = await this.getDirectoryHandle(dirPath);
         dir.getDirectoryHandle(path.split('/').pop(), {create: true});
+        this.markChanged();
     }
 
     async generateSingleProjectFile() {

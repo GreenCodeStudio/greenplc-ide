@@ -41,6 +41,10 @@ export class FileTreeComponent extends HTMLElement {
         this.filesystem = filesystem
         this.classList.remove('notLoaded')
         this.subLoad(this, filesystem, '/')
+        filesystem.addOnchangeListener(this.refresh.bind(this))
+    }
+    refresh(){
+        this.subLoad(this, this.filesystem, '/')
     }
 
     async subLoad(element, filesystem, path) {
@@ -75,7 +79,7 @@ export class FileTreeComponent extends HTMLElement {
             const items = [
                 {
                     label: 'Refresh',
-                    action: () => this.load(filesystem)
+                    action: () => this.refresh()
                 },
                 {
                     label: 'New File',

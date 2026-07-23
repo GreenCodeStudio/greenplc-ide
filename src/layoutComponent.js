@@ -6,6 +6,7 @@ import {ContextMenuComponent} from "./contextMenuComponent.js";
 import {LocalFilesystem} from "./filesystem/localFilesystem.js";
 import {InMemoryFilesystem} from "./filesystem/InMemoryFilesystem.js";
 import {ProjectFileFilesystem} from "./filesystem/ProjectFileFilesystem.js";
+import {__compileTime, __version} from "../version.js";
 
 export class LayoutComponent extends HTMLElement {
     constructor() {
@@ -140,7 +141,7 @@ export class LayoutComponent extends HTMLElement {
                 const items = [];
                 items.push({
                     label: 'About', action: async () => {
-                        alert("Green PLC IDE")
+                        alert(`Green PLC IDE\nVersion ${__version} compiled at ${__compileTime}\n\nThis software is licensed under the MIT License.`)
                     }
                 })
 
