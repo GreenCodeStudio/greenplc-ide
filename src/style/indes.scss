@@ -50,6 +50,7 @@ layout-component {
 
     > nav {
         grid-column: 1/3;
+        width: env(titlebar-area-width, 100%);
     }
 
     > aside, > main {

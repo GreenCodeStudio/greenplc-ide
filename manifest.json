@@ -1,5 +1,5 @@
 {
-  "name": "Green PLC IDE1",
+  "name": "Green PLC IDE",
   "short_name": "GreenPLC",
   "description": "PLC and microcontroller IDE",
   "start_url": ".",
@@ -8,7 +8,7 @@
   "display": "standalone",
   "orientation": "any",
   "background_color": "#333",
-  "theme_color": "#2b7a0b",
+  "theme_color": "#333",
   "icons": [
     {
       "src": "icons/icon.svg",
