@@ -34,6 +34,7 @@ export class FileTreeComponent extends HTMLElement {
                 }
             }
         });
+
     }
 
     async load(filesystem) {
