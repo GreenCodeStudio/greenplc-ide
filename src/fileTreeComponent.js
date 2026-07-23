@@ -6,6 +6,7 @@ import {create} from "fast-creator";
 export class FileTreeComponent extends HTMLElement {
     constructor() {
         super();
+        this.classList.add('notLoaded')
         const loadButton = document.createElement('button');
         loadButton.textContent = 'Load directory';
         loadButton.onclick = async () => {
@@ -14,9 +15,30 @@ export class FileTreeComponent extends HTMLElement {
             this.load(new LocalFilesystem(directory))
         }
         this.append(loadButton)
+        this.addEventListener('dragover',e=>{
+            if (e.dataTransfer.types.includes('Files')) {
+                e.preventDefault();
+            }
+        })
+        this.addEventListener('drop', async e => {
+            e.preventDefault()
+            for (const item of e.dataTransfer.items) {
+                const handle = await item.getAsFileSystemHandle();
+                if (handle.kind === 'directory') {
+                    this.load(new LocalFilesystem(handle))
+                } else {
+                    if(this.filesystem){
+                        const file=await handle.getFile();
+                        this.filesystem.writeFile(handle.name, file)
+                    }
+                }
+            }
+        });
     }
 
     async load(filesystem) {
+        this.filesystem = filesystem
+        this.classList.remove('notLoaded')
         this.subLoad(this, filesystem, '/')
     }
 
@@ -25,9 +47,10 @@ export class FileTreeComponent extends HTMLElement {
             element.removeChild(element.firstChild)
         }
         for await (let x of filesystem.list(path)) {
-            const item = create('div', {class: x.isDirectory ? 'directory' : (x.name.toString().toLocaleLowerCase().endsWith('.gplc') ? 'gplcFile' : 'file')});
+            const item = create('div', {class: 'item '+(x.isDirectory ? 'directory' : (x.name.toString().toLocaleLowerCase().endsWith('.gplc') ? 'gplcFile' : 'file'))});
             item.textContent = x.name;
-            element.append(item)
+            const itemWrapper = create('div', {class: 'itemWrapper'}, item);
+            element.append(itemWrapper)
             item.onclick = () => {
                 if (x.isDirectory) {
 
@@ -38,8 +61,12 @@ export class FileTreeComponent extends HTMLElement {
             }
             if (x.isDirectory) {
                 const subTree = create('.subTree');
-                item.append(subTree);
+                itemWrapper.append(subTree);
                 this.subLoad(subTree, filesystem, x.path)
+            }
+            item.draggable=true;
+            item.ondragstart = e => {
+                e.dataTransfer.setData('text/x-greenplc-filePath', x.path);
             }
         }
         this.oncontextmenu = e => {

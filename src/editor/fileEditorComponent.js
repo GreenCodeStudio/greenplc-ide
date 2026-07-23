@@ -33,7 +33,7 @@ export class FileEditorComponent extends HTMLElement {
             this.append(info)
             codeEditor.addEventListener('input', () => {
                 this.regenerateInfo(info, codeEditor.textContent);
-                filesystem.writeFile(path, codeEditor.textContent);
+                filesystem.writeFileText(path, codeEditor.textContent);
             });
             codeEditor.addEventListener('change', () => {
                 if (codeEditor.children.length > 0) {
@@ -52,7 +52,7 @@ export class FileEditorComponent extends HTMLElement {
                             parser.modules.push(new ModuleNode());
                             const serializedCode = parser.modules.map(m => Serializer.serialize(m)).join('\n');
                             codeEditor.textContent = serializedCode;
-                            filesystem.writeFile(path, serializedCode);
+                            filesystem.writeFileText(path, serializedCode);
 
                             this.regenerateInfo(this.info, serializedCode)
                         }
@@ -64,7 +64,7 @@ export class FileEditorComponent extends HTMLElement {
                             parser.parse();
                             const serializedCode = parser.modules.map(m => Serializer.serialize(m)).join('\n');
                             codeEditor.textContent = serializedCode;
-                            filesystem.writeFile(path, serializedCode);
+                            filesystem.writeFileText(path, serializedCode);
                         }
                     }
                 ]
@@ -75,7 +75,7 @@ export class FileEditorComponent extends HTMLElement {
             textarea.value = content;
             this.append(textarea)
             textarea.onchange = async () => {
-                await filesystem.writeFile(path, textarea.value);
+                await filesystem.writeFileText(path, textarea.value);
             }
         }
     }
@@ -138,7 +138,7 @@ export class FileEditorComponent extends HTMLElement {
                     const serializedCode = clonedModules.map(m => Serializer.serialize(m)).join('\n');
                     console.log('saving code', serializedCode)
                     this.querySelector('div.codeEditor').textContent = serializedCode;
-                    this.filesystem.writeFile(this.path, serializedCode);
+                    this.filesystem.writeFileText(this.path, serializedCode);
                     this.regenerateInfo(this.info, serializedCode)
 
                 })
