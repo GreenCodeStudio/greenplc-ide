@@ -3,7 +3,7 @@
   "short_name": "GreenPLC",
   "description": "PLC and microcontroller IDE",
   "start_url": ".",
-  "scope": "/",
+  "scope": ".",
   "display_override": ["fullscreen", "minimal-ui"],
   "display": "standalone",
   "orientation": "any",
@@ -18,7 +18,7 @@
   ],
   "file_handlers": [
     {
-      "action": "/",
+      "action": ".",
       "accept": {
         "application/greenplc-project": [".gplcproject"]
       }
